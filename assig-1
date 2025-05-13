@@ -1,0 +1,66 @@
+pip install nltk
+
+import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+
+from nltk.tokenize import (
+    word_tokenize, WhitespaceTokenizer, TreebankWordTokenizer,
+    TweetTokenizer, MWETokenizer
+)
+from nltk.stem import PorterStemmer, SnowballStemmer
+from nltk.stem import WordNetLemmatizer
+
+# Sample text
+text = "I'm loving the NLTK library! It's great for text-processing tasks. Don't you agree?"
+
+# 1. TOKENIZATION
+
+# Whitespace Tokenizer
+print("\n1. Whitespace Tokenizer:")
+whitespace_tokens = WhitespaceTokenizer().tokenize(text)
+print(whitespace_tokens)
+
+# Punctuation-based Tokenizer (using word_tokenize which handles punctuation)
+print("\n2. Punctuation-based Tokenizer:")
+punctuation_tokens = word_tokenize(text)
+print(punctuation_tokens)
+
+# Treebank Tokenizer
+print("\n3. Treebank Tokenizer:")
+treebank_tokens = TreebankWordTokenizer().tokenize(text)
+print(treebank_tokens)
+
+# Tweet Tokenizer
+print("\n4. Tweet Tokenizer:")
+tweet_tokens = TweetTokenizer().tokenize(text)
+print(tweet_tokens)
+
+# MWE Tokenizer (Multi-Word Expression tokenizer)
+print("\n5. MWE Tokenizer:")
+mwe_tokenizer = MWETokenizer([('text', '-', 'processing')])
+mwe_tokens = mwe_tokenizer.tokenize(word_tokenize("NLTK helps in text - processing very well."))
+print(mwe_tokens)
+
+# 2. STEMMING
+
+# Porter Stemmer
+print("\n6. Porter Stemmer:")
+porter = PorterStemmer()
+porter_stems = [porter.stem(word) for word in punctuation_tokens]
+print(porter_stems)
+
+# Snowball Stemmer (for English)
+print("\n7. Snowball Stemmer:")
+snowball = SnowballStemmer("english")
+snowball_stems = [snowball.stem(word) for word in punctuation_tokens]
+print(snowball_stems)
+
+# 3. LEMMATIZATION
+
+print("\n8. Lemmatization using WordNet:")
+lemmatizer = WordNetLemmatizer()
+lemmas = [lemmatizer.lemmatize(word) for word in punctuation_tokens]
+print(lemmas)
